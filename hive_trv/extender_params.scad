@@ -2,7 +2,7 @@
 // https://github.com/revarbat/BOSL2/wiki/constants.scad#constant-slop
 slop = 0.10;
 
-L = 130;
+L = 135;
 
 od = 40;
 
