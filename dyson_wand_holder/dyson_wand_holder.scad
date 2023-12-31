@@ -77,15 +77,13 @@ difference() {
 
   // wand insertion/extraction path
   translate([0, 0, h*2/3])
+  rotate([0, 90, 0])
+  rotate([0, 0, 90])
   union() {
-    mirror([0, 1, 0])
-    rotate([0, 90, 0])
-    rotate([0, 0, 90])
+    mirror([1, 0, 0])
     linear_extrude(height=L, center=false, $fn=fn)
     polygon(wand_section);
 
-    rotate([0, 90, 0])
-    rotate([0, 0, 90])
     linear_extrude(height=L, center=false, $fn=fn)
     polygon(wand_section);
   }
