@@ -4,15 +4,12 @@ slop = 0.10;
 
 L = 135;
 
-od = 40;
-
 // Pin
 pid = 6; // internal diameter
-ped = pid + 4*slop;  // external diameter
+ped = pid + 6*slop;  // external diameter
 pfn = $preview ? 32 : 64;  // $fn
 
 d = 30;
-l1 = 6;
 l2 = 6;
 pitch = 1.5;
 
