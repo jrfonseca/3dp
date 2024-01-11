@@ -1,15 +1,18 @@
 all: \
-	extender_body.stl \
+	extender_column.stl \
+	extender_flange.stl \
 	extender_pin_half.stl
 
-extender_body.stl: extender_body.scad extender_params.scad
-extender_pin_half.stl: extender_pin_half.scad extender_params.scad
+extender_column.stl: extender_column.scad extender_common.scad
+extender_flange.stl: extender_flange.scad extender_common.scad
+extender_pin_half.stl: extender_pin_half.scad extender_common.scad
 
 package: hive_trv_extender.7z
 
 hive_trv_extender.7z: \
-	extender_params.scad extender_body.scad extender_pin_half.scad \
-	extender_body.stl extender_pin_half.stl \
+	extender_common.scad extender_column.scad extender_flange.scad extender_pin_half.scad \
+	extender_column.stl extender_pin_half.stl \
+	extender_column.stl extender_flange.stl extender_pin_half.stl \
 	Makefile
 	-$(RM) $@
 	7za a $@ $^

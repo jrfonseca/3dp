@@ -1,21 +1,37 @@
-include <BOSL2/std.scad>
-include <BOSL2/threading.scad>
-include <BOSL2/rounding.scad>
+// FIXME: Needs to be calibrated as explained in
+// https://github.com/revarbat/BOSL2/wiki/constants.scad#constant-slop
+slop = 0.10;
 
-include <extender_params.scad>
+L = 135;
 
-// Uncomment the following line to see a cut along the axis
-//projection(cut=true) rotate([90,0,0])
+// Pin
+pid = 6; // internal diameter
+ped = pid + 6*slop;  // external diameter
+pfn = $preview ? 32 : 64;  // $fn
+
+d = 30;
+l2 = 6;
+pitch = 1.5;
+
+// https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Other_Language_Features#$fa,_$fs_and_$fn
+
+fn = $preview ? 64 : 128;
+
 
 h1 = 7;
 h2 = h1 + 3;
 h3 = h2 + 5;
 
-d1 = 25;
-d2 = 27.5;
+md = 28.376; // M30 minor diameter
 
-rotate([180, 0, 0])
-{
+d1 = 25;
+d2 = md;
+
+
+module extender_column() {
+  // Uncomment the following line to see a cut along the axis
+  //projection(cut=true) rotate([90,0,0])
+
   difference() {
 
     union() {
@@ -23,13 +39,11 @@ rotate([180, 0, 0])
       translate([0, 0, L - l2])
         threaded_rod(d=d, l=l2, pitch=pitch, anchor=[0, 0, -1], $slop=slop, $fa = 1, $fs = 0.5);
 
-      md = 28.376; // M30 minor diameter
-
       shape = [
         [d1/2, L - l2 - (md - d1)/2],
         [d1/2, 3],
         [d2/2, 3],
-        [d1/2, 0],
+        [d2/2, 0],
         [16/2, 0],
         [16/2, h2],
         [0, h2],
@@ -52,15 +66,12 @@ rotate([180, 0, 0])
     // hexagon
     cylinder(h=7, d=21.8, $fn=6);
 
-    // cuts
-    size = [3.4,L,h2*2];
-    cube(size, center=true);
-    rotate([0, 0, 120])
-    cube(size, center=true);
-    rotate([0, 0, -120])
-    cube(size, center=true);
-
     // Subtract the pin hole
     cylinder(h = 3*L, d=ped, center=true, $fn = pfn);
   }
+}
+
+
+module extender_pin() {
+  cylinder(h = L, d=pid, center=false, $fn = pfn);
 }
