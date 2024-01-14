@@ -5,11 +5,16 @@ include <BOSL2/rounding.scad>
 fn = $preview ? 64 : 128;
 
 
-gap = 2.5;
+gap = 2.0;
 
-d1 = 39.50 + gap;
-d2 = 51.50 + gap;
-h = 10.8;
+d1_ = 39.5;
+d2_ = 51.5;
+h_ = 10.8;
+
+// Extend the conic surface so there's an extra gap around the major diameter
+d1 = d1_;
+d2 = d2_ + gap;
+h  = h_  + h_*gap/(d2 - d1);
 
 
 // large number;
@@ -50,7 +55,7 @@ body_section_radii = [0, 2, 2, 0, 2, 0];
 body_section_rounded = round_corners(body_section, radius = body_section_radii, $fa=1, $fs=0.5);
 
 
-// screw diameters (clearance and head)
+// screw diameters (clearance hole and head)
 sd1 = 4.0;
 sd2 = 8.0;
 
