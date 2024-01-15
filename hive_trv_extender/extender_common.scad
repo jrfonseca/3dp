@@ -6,7 +6,7 @@ L = 135;
 
 // Pin
 pid = 6; // internal diameter
-ped = pid + 6*slop;  // external diameter
+ped = pid + 5*slop;  // external diameter
 pfn = $preview ? 32 : 64;  // $fn
 
 d = 30;
@@ -20,7 +20,6 @@ fn = $preview ? 64 : 128;
 
 h1 = 7;
 h2 = h1 + 3;
-h3 = h2 + 5;
 
 md = 28.376; // M30 minor diameter
 
@@ -64,7 +63,7 @@ module extender_column() {
     }
 
     // hexagon
-    cylinder(h=7, d=21.8, $fn=6);
+    cylinder(h=h1, d=22, $fn=6);
 
     // Subtract the pin hole
     cylinder(h = 3*L, d=ped, center=true, $fn = pfn);
