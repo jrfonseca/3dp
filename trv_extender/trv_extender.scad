@@ -28,7 +28,7 @@ h2 = h1 + 3;
 
 md = 28.376; // M30 minor diameter
 
-d1 = 25;
+d1 = 26;
 d2 = md;
 
 
@@ -58,7 +58,7 @@ module extender_column() {
       // Round the exterior
       // https://github.com/revarbat/BOSL2/wiki/rounding.scad#function-round_corners
       radii = [
-         5,
+         4,
          0, 0, 0, 0, 0, 0, 0, 0,
       ];
       shape2 = round_corners(shape, radius = radii, $fa=1, $fs=0.5);
