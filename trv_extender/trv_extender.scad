@@ -1,4 +1,9 @@
-// FIXME: Needs to be calibrated as explained in
+include <BOSL2/std.scad>
+include <BOSL2/threading.scad>
+include <BOSL2/rounding.scad>
+
+
+// XXX: Should be calibrated as explained in
 // https://github.com/revarbat/BOSL2/wiki/constants.scad#constant-slop
 slop = 0.10;
 
@@ -45,8 +50,8 @@ module extender_column() {
         [d2/2, 0],
         [16/2, 0],
         [16/2, h2],
-        [0, h2],
-        [0, L - l2],
+        [0,    h2],
+        [0,    L - l2],
         [md/2, L - l2],
       ];
 
@@ -74,3 +79,34 @@ module extender_column() {
 module extender_pin() {
   cylinder(h = L, d=pid, center=false, $fn = pfn);
 }
+
+
+if (is_undef(part)) {
+  extender_column();
+
+  color("red")
+  extender_pin();
+}
+else if (part == "flange") {
+  intersection() {
+    extender_column();
+    cube([2*L, 2*L, 2*h1], center=true);
+  }
+}
+else if (part == "column") {
+  rotate([180, 0, 0])
+  intersection() {
+    extender_column();
+    translate([0, 0, L + h1]) cube([2*L, 2*L, 2*L], center=true);
+  }
+}
+else if (part == "pin_half") {
+  color("red")
+  intersection() {
+    rotate([0, 90, 0]) extender_pin();
+    translate([0, 0, 1]*L) cube(2*L, center=true);
+  }
+}
+
+
+
